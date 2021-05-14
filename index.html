@@ -4,20 +4,98 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Images in HTML | Part 1</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+		<link rel="stylesheet" href="dist/theme/league.css" id="theme">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+
+		<style>
+			.reveal pre {
+				width: 120%;
+				margin-left: -10%;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h1>Images in HTML</h1>
+					<h2>Part 1</h2>
+					<h3>By Chip Cullen for PBS</h3>
+				</section>
+				<section>
+					<h2>Agenda</h2>
+					<ul>
+						<li>Syntax
+							<ul>
+								<li>Attributes</li>
+								<li>Wrapper Elements</li>
+							</ul>
+						</li>
+						<li>Rendering & CSS</li>
+						<li>Accessibility</li>
+						<li>Formats</li>
+						<li>Lazyloading</li>
+						<li>Images at PBS (ITS)</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Syntax</h2>
+				</section>
+				<section>
+					<pre class="fragment"><code data-trim>
+						<img src="billmurray.jpg" alt="Bill Murray" />
+					</code></pre>
+					<img class="fragment" src="billmurray.jpg" alt="Bill Murray" />
+				</section>
+				<section>
+					<h2>Thanks for coming!</h2>
+				</section>
+				<section>
+					<h2>Remember these?</h2>
+					<pre><code>
+<img src="billmurray.jpg" width="300" height="350" alt="..." />
+					</code></pre>
+					<p class="fragment">they're a thing again</p>
+				</section>
+				<section>
+					<h2>srcset & sizes</h2>
+					<pre><code data-trim >
+<img src="billmurray.jpg" srcset="" sizes="" width="300" height="350" alt="..." />
+					</code></pre>
+					<p>aka "responsive hints"</p>
+				</section>
+				<section>
+					<h2>Wrapper Elements</h2>
+				</section>
+				<section>
+					<h2>picture (with source)</h2>
+					<pre><code data-trim>
+						<picture>
+							<source media="(min-width: 768px)"
+							type="image/jpeg"
+							srcset="billmurray.jpg 1x,
+							billmurrayhighres.jpg 2x"
+							>
+							<img src="billmurray.jpg" alt="Bill Murray" />
+						</picture>
+					</code></pre>
+				</section>
+				<section>
+					<h2>figure (with figcaption)</h2>
+					<pre><code data-trim>
+						<figure>
+							<img src="billmurray.jpg" alt="Bill Murray" />
+							<figcaption>Bill Murray is awesome</figcaption>
+						</figure>
+					</code></pre>
+				</section>
+
 			</div>
 		</div>
 
