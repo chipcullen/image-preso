@@ -15,8 +15,12 @@
 
 		<style>
 			.reveal pre {
-				width: 120%;
-				margin-left: -10%;
+				width: 130%;
+				margin-left: -15%;
+			}
+			.reveal pre code {
+				width: 130%;
+				margin-left: -15%;
 			}
 		</style>
 	</head>
@@ -48,7 +52,7 @@
 					<h2>Syntax</h2>
 				</section>
 				<section>
-					<pre class="fragment"><code data-trim>
+					<pre class="fragment"><code data-trim class="html">
 						<img src="billmurray.jpg" alt="Bill Murray" />
 					</code></pre>
 					<img class="fragment" src="billmurray.jpg" alt="Bill Murray" />
@@ -58,17 +62,20 @@
 				</section>
 				<section>
 					<h2>Remember these?</h2>
-					<pre><code>
+					<pre><code class="html">
 <img src="billmurray.jpg" width="300" height="350" alt="..." />
 					</code></pre>
 					<p class="fragment">they're a thing again</p>
 				</section>
 				<section>
 					<h2>srcset & sizes</h2>
-					<pre><code data-trim >
+					<pre><code data-trim class="html">
 <img src="billmurray.jpg" srcset="" sizes="" width="300" height="350" alt="..." />
 					</code></pre>
 					<p>aka "responsive hints"</p>
+					<aside class="notes">
+					  remember that the *browser* decides what to do with this information
+					</aside>
 				</section>
 				<section>
 					<h2>Wrapper Elements</h2>
@@ -88,7 +95,7 @@
 				</section>
 				<section>
 					<h2>figure (with figcaption)</h2>
-					<pre><code data-trim>
+					<pre><code data-trim class="html">
 						<figure>
 							<img src="billmurray.jpg" alt="Bill Murray" />
 							<figcaption>Bill Murray is awesome</figcaption>
@@ -100,10 +107,206 @@
 				</section>
 				<section>
 					<h2>Images are "replaced elements"</h2>
-					<p class="fragment">This means that CSS doesn't affect the rendering of the contents of the element</p>
+					<p class="fragment">CSS doesn't affect the rendering of the element's contents</p>
 					<p class="fragment">(see also: video, iframe, embed)</p>
 				</section>
+				<section>
+					<h2>object-fit</h2>
+					<pre><code data-trim class="css">
+						img {
+							object-fit: cover; // contain, fill, none, scale-down
+						}
+					</code></pre>
+					<div style="margin: 0 auto; display: flex; justify-content: space-between; gap: 20px;" class="fragment">
+						<div style="width: 200px; height: 200px; outline: 1px solid limegreen">
+							<img src="billmurray.jpg" alt="Bill Murray" style="object-fit: cover; margin: 0; width: 100%; height: 100%; max-width: none; max-height: none;" />
+						</div>
+						<div style="width: 200px; height: 200px; outline: 1px solid yellow">
+							<img src="billmurray.jpg" alt="Bill Murray" style="object-fit: contain; margin: 0; width: 100%; height: 100%; max-width: none; max-height: none;" />
+						</div>
+						<div style="width: 200px; height: 200px; outline: 1px solid orange">
+							<img src="billmurray.jpg" alt="Bill Murray" style="object-fit: fill; margin: 0; width: 100%; height: 100%; max-width: none; max-height: none;" />
+						</div>
+						<div style="width: 200px; height: 200px; outline: 1px solid cyan">
+							<img src="billmurray.jpg" alt="Bill Murray" style="object-fit: none; margin: 0; width: 100%; height: 100%; max-width: none; max-height: none;" />
+						</div>
+						<div style="width: 200px; height: 200px; outline: 1px solid hotpink">
+							<img src="billmurray.jpg" alt="Bill Murray" style="object-fit: scale-down; margin: 0; width: 100%; height: 100%; max-width: none; max-height: none;" />
+						</div>
+					</div>
+					<p class="fragment">keywords behave a lot like `background-size`</p>
+					<aside class="notes">
+					  object-fit describes how an image should be resized to fit it's container
+					</aside>
+				</section>
+				<section>
+					<h2>object-position</h2>
+					<pre><code data-trim class="css">
+						img {
+							object-position: left top; // right bottom; 50% 50%;
+						}
+					</code></pre>
+					<div style="margin: 0 auto; display: flex; justify-content: space-between; gap: 20px;" class="fragment">
+						<div style="width: 200px; height: 200px; outline: 1px solid limegreen">
+							<img src="billmurray.jpg" alt="Bill Murray" style="object-fit: cover; object-position: left bottom; margin: 0; width: 100%; height: 100%; max-width: none; max-height: none;" />
+						</div>
+						<div style="width: 200px; height: 200px; outline: 1px solid yellow">
+							<img src="billmurray.jpg" alt="Bill Murray" style="object-fit: cover; object-position: right top; margin: 0; width: 100%; height: 100%; max-width: none; max-height: none;" />
+						</div>
+						<div style="width: 200px; height: 200px; outline: 1px solid yellow">
+							<img src="billmurray.jpg" alt="Bill Murray" style="object-fit: cover; object-position: 50% 50%; margin: 0; width: 100%; height: 100%; max-width: none; max-height: none;" />
+						</div>
+					</div>
+					<p class="fragment">behaves a lot like `background-position`</p>
+					<aside class="notes">
+					  object-fit describes how an image should be resized to fit it's container
+					</aside>
+				</section>
+				<section>
+					<h2>Accessibility</h2>
+				</section>
+				<section>
+					<pre><code data-trim class="html">
+						<img src="billmurray.jpg" alt="Bill Murray" />
+					</code></pre>
+				</section>
+				<section>
+					<h2>Consider context</h2>
+					<pre><code data-trim class="html">
+						<img src="billmurray.jpg" alt="Bill Murray in a Ghostbusters costume" />
+					</code></pre>
+					<pre class="fragment"><code data-trim class="html">
+						<a href="...">
+						<img src="billmurray.jpg" alt="Link to clip of Bill Murray having fun as a Ghostbuster" />
+						</a>
+					</code></pre>
+					<pre class="fragment"><code data-trim class="html">
+						<h2>Bill Murray</h2>
+						<img src="billmurray.jpg" alt="" />
+					</code></pre>
+					<pre class="fragment"><code data-trim class="html">
+						<img src="billmurray.jpg" alt="" class="background-art" />
+					</code></pre>
+				</section>
+				<section>
+					<h2>Longer alternative text</h2>
+					<pre><code data-trim class="html">
+						<img src="billmurray.jpg" alt="Bill Murray" aria-describedby="info" />
+						<p id="info">Bill Murray is awesome!</p>
+					</code></pre>
+					<pre class="fragment"><code data-trim class="html">
+						<img src="billmurray.jpg" alt="Bill Murray" aria-details="detailed-info" />
+						<div id="detailed-info">
+							<h2>Bill Murray is awesome!</h2>
+							<p>He has been in many movies.</p>
+						</div>
+						</a>
+					</code></pre>
+					<p class="fragment">`longdesc` is deprecated</p>
+				</section>
+				<section>
+					<h2>Formats</h2>
+				</section>
+				<section>
+					<ul>
+						<li>JPEG</li>
+						<li>PNG</li>
+						<li>GIF</li>
+						<li>SVG</li>
+						<li class="fragment">WEBP</li>
+						<li class="fragment">AVIF</li>
+					</ul>
+				</section>
+				<section>
+					<h2>WEBP</h2>
+					<p>Already 12 years old!</p>
+					<img class="fragment" src="webp.png" alt="Use WEBP!">
+				</section>
+				<section>
+					<h2>AVIF</h2>
+					<p>New Hotness</p>
+					<img class="fragment" src="avif.png" alt="AVIF comparison image of a racecar" style="width: 60%;">
+					<p class="fragment"><a href="https://github.com/pbs/its/issues/195">ITS Issue</a></p>
+					<aside class="notes">
+						we should be very excited about this as so much of the content on our sites are images;
+					  only supported in chrome and opera right now; ITS support is waiting on Pillow support
+					</aside>
+				</section>
+				<section>
+					<h2>Lazyloading</h2>
+					<aside class="notes">We have two options for lazyloading images</aside>
+				</section>
+				<section>
+					<h2>With a library</h2>
+					<p><a href="https://github.com/aFarkas/lazysizes">Lazysizes</a></p>
+					<pre class="fragment"><code data-trim class="html">
+						<img src="billmurray.jpg" srcset="..." alt="Bill Murray" />
+					</code></pre>
+					<pre class="fragment"><code data-trim class="html">
+						<img data-src="billmurray.jpg" data-srcset="..." alt="Bill Murray" class="lazyload" />
+					</code></pre>
+					<pre class="fragment"><code data-trim class="html">
+						<img src="billmurray.jpg" srcset="..." alt="Bill Murray" class="lazyloaded" />
+					</code></pre>
+				</section>
+				<section>
+					<h2>With Standards!</h2>
+					<pre class="fragment"><code data-trim class="html">
+						<img src="billmurray.jpg" alt="Bill Murray" loading="lazy" />
+					</code></pre>
+					<pre class="fragment"><code data-trim class="html">
+						<img src="billmurray.jpg" alt="Bill Murray" loading="eager" />
+					</code></pre>
 
+					<img class="fragment" src="lazyloading.png" alt="Lazyloading support" />
+				</section>
+				<section>
+					<h2>Images at PBS (ITS)</h2>
+				</section>
+				<section>
+					<h2>ITS = Image Transformation Service</h2>
+					<img src="its.png" alt="">
+				</section>
+				<section>
+					<pre><code data-trim class="html">
+						<img src="https://image.pbs.org/video-assets/5jJewwH-asset-mezzanine-16x9-esGHBDK.png" alt="cake" />
+					</code></pre>
+					<pre class="fragment"><code data-trim class="html">
+						<img src="https://image.pbs.org/video-assets/5jJewwH-asset-mezzanine-16x9-esGHBDK.png?crop=50x50" alt="cake" />
+					</code></pre>
+					<pre class="fragment"><code data-trim class="html">
+						<img src="https://image.pbs.org/video-assets/5jJewwH-asset-mezzanine-16x9-esGHBDK.png?blur=10" alt="cake" />
+					</code></pre>
+				</section>
+				<section>
+					<h2>format auto</h2>
+					<pre><code data-trim class="html">
+						<img src="https://image.pbs.org/contentchannels/ED6PSZP-show-poster2x3-Ve6hmZh.jpg?crop=224x335" alt="NOVA" />
+					</code></pre>
+					<img src="https://image.pbs.org/contentchannels/ED6PSZP-show-poster2x3-Ve6hmZh.jpg?crop=224x335" alt="NOVA" />
+				</section>
+				<section>
+					<h2>format auto</h2>
+					<pre><code data-trim class="html">
+						<img src="https://image.pbs.org/contentchannels/Zve3YBO-show-poster2x3-EyCx7Vr.jpg?crop=224x335" alt="POV" />
+					</code></pre>
+					<img src="https://image.pbs.org/contentchannels/Zve3YBO-show-poster2x3-EyCx7Vr.jpg?crop=224x335" alt="POV" />
+				</section>
+				<section>
+					<h2>format auto</h2>
+					<pre><code data-trim class="html">
+						<img src="https://image.pbs.org/contentchannels/Zve3YBO-show-poster2x3-EyCx7Vr.jpg?crop=224x335&format=auto" alt="POV" />
+					</code></pre>
+					<img src="https://image.pbs.org/contentchannels/Zve3YBO-show-poster2x3-EyCx7Vr.jpg?crop=224x335&format=auto" alt="POV" />
+					<img src="itsauto.png" alt="Showing ITS response is type image/png" class="fragment">
+				</section>
+				<section>
+					<p><a href="https://github.com/pbs/its">https://github.com/pbs/its</a></p>
+				</section>
+				<section>
+					<h2>Thank you!</h2>
+					<h3>(For reals!)</h3>
+				</section>
 			</div>
 		</div>
 
