@@ -17,11 +17,14 @@
 			.reveal pre {
 				width: 130%;
 				margin-left: -15%;
+				/* white-space: pre; */
 			}
 			.reveal pre code {
-				width: 130%;
-				margin-left: -15%;
+				/* white-space: pre; */
+				/* width: 100%;
+				margin-left: -15%; */
 			}
+
 		</style>
 	</head>
 	<body>
@@ -46,6 +49,19 @@
 						<li>Formats</li>
 						<li>Lazyloading</li>
 						<li>Images at PBS (ITS)</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Agenda (if we have time)</h2>
+					<ul>
+						<li>Responsive Images
+							<ul>
+								<li>srcset</li>
+								<li>sizes</li>
+								<li>picture & source</li>
+								<li>other uses of source</li>
+							</ul>
+						</li>
 					</ul>
 				</section>
 				<section>
@@ -111,6 +127,18 @@
 					<p class="fragment">(see also: video, iframe, embed)</p>
 				</section>
 				<section>
+					<h2>aspect-ratio</h2>
+					<pre><code class="html">
+<img src="billmurray.jpg" width="300" height="350" alt="..." />
+					</code></pre>
+					<pre class="fragment"><code data-trim class="css">
+						/* internal browser stylesheet - you don't need to add this */
+						img, input[type="image"], video, embed, iframe, marquee, object, table {
+							aspect-ratio: attr(width) / attr(height);
+						}
+					</code></pre>
+				</section>
+				<section>
 					<h2>object-fit</h2>
 					<pre><code data-trim class="css">
 						img {
@@ -162,6 +190,7 @@
 					  object-fit describes how an image should be resized to fit it's container
 					</aside>
 				</section>
+
 				<section>
 					<h2>Accessibility</h2>
 				</section>
@@ -302,6 +331,166 @@
 				</section>
 				<section>
 					<p><a href="https://github.com/pbs/its">https://github.com/pbs/its</a></p>
+				</section>
+				<section>
+					<h2>timecheck?</h2>
+				</section>
+				<section>
+					<h2>Responsive Images</h2>
+				</section>
+				<section>
+					<h2>srcset</h2>
+					<pre><code class="html">
+<img src="billmurray.jpg" srcset="billmurray.jpg 1x, billmurrayhighres.jpg 2x" alt="..." />
+					</code></pre>
+					<pre class="fragment"><code class="html">
+<img src="billmurray.jpg"
+	srcset="billmurray.jpg 200w, billmurrayhighres.jpg 400w" alt="..." />
+					</code></pre>
+					<p class="fragment">If all you are doing is resolution switching, this should be enough</p>
+					<aside class="notes">1x is a density descriptor, 200w is a width descriptor</aside>
+				</section>
+				<section>
+					<h2>sizes</h2>
+					<pre><code class="html">
+<img src="..." srcset="..." sizes="(min-width: 1023px) 400px, (min-width: 600px) 200px, 100px" alt="..." />
+					</code></pre>
+					<pre class="fragment"><code class="html">
+<img sizes="(min-width: 1023px) calc(50vw - 20px), (min-width: 600px) 100vw, 100px"  />
+					</code></pre>
+					<aside class="notes">Sizes is a responsive hint. Browsers will go through the list looking for the first match, and fall back to the last one. Note the last one should not have a media condition.</aside>
+				</section>
+				<section>
+					<h2>Picture & Source</h2>
+					<pre><code data-trim class="html">
+						<picture>
+							<source media="(min-width: 768px)"
+							type="image/jpeg"
+							srcset="billmurray_square.jpg 1x,
+							billmurray_square_highres.jpg 2x"
+							sizes="..."
+							>
+							<source
+							type="image/jpeg"
+							srcset="billmurray.jpg 1x,
+							billmurrayhighres.jpg 2x"
+							sizes="..."
+							>
+							<img src="billmurray.jpg" alt="Bill Murray" />
+						</picture>
+					</code></pre>
+					<aside class="notes">the common use case for picture is "art direction"</aside>
+				</section>
+				<section>
+					<h2>Other uses of source</h2>
+					<h3>File formats with fallbacks</h3>
+					<pre><code data-trim class="html">
+						<picture>
+							<source
+							type="image/webp"
+							srcset="billmurray.webp 1x,
+							billmurrayhighres.webp 2x"
+							>
+							<source
+							type="image/jpeg"
+							srcset="billmurray.jpg 1x,
+							billmurrayhighres.jpg 2x"
+							>
+							<img src="billmurray.jpg" alt="Bill Murray" />
+						</picture>
+					</code></pre>
+					<aside class="notes">A way to introduce new file formats while providing a fallback for older browsers. </aside>
+				</section>
+				<section>
+					<h2>Other uses of source</h2>
+					<h3>File formats with fallbacks</h3>
+					<pre><code data-trim class="html">
+						<picture>
+							<source
+							type="image/avif"
+							srcset="billmurray.avif 1x,
+							billmurrayhighres.avif 2x"
+							>
+							<source
+							type="image/webp"
+							srcset="billmurray.webp 1x,
+							billmurrayhighres.webp 2x"
+							>
+							<source
+							type="image/jpeg"
+							srcset="billmurray.jpg 1x,
+							billmurrayhighres.jpg 2x"
+							>
+							<img src="billmurray.jpg" alt="Bill Murray" />
+						</picture>
+					</code></pre>
+					<aside class="notes">A possible way to add AVIF support </aside>
+				</section>
+				<section>
+					<h2>Other uses of source</h2>
+					<h3>Media queries!</h3>
+					<p>prefers-color-scheme:</p>
+					<pre><code data-trim class="html">
+						<picture>
+							<source
+								type="image/png"
+								media="(prefers-color-scheme: light) or (prefers-color-scheme: no-preference)"
+								srcset="color_logo.png 1x, color_logo_highres.png 2x"
+							>
+							<source
+								type="image/png"
+								media="(prefers-color-scheme: dark)"
+								srcset="reversed_logo.png 1x, reversed_logo_highres.png 2x"
+							>
+							<img
+								src="color_logo.png"
+								alt="..." />
+						</picture>
+					</code></pre>
+				</section>
+				<section>
+					<h2>Other uses of source</h2>
+					<h3>Media queries!</h3>
+					<p>prefers-reduced-motion:</p>
+					<pre><code data-trim class="html">
+						<picture>
+							<source
+								type="image/png"
+								media="(prefers-reduced-motion: reduce)"
+								srcset="cat.png 1x, cat_highres.png 2x"
+							>
+							<source
+								type="image/gif"
+								media="(prefers-reduced-motion: no-preference)"
+								srcset="animated_cat.gif 1x, animated_cat_highres.gif 2x"
+							>
+							<img
+								src="cat.png"
+								alt="..." />
+						</picture>
+					</code></pre>
+				</section>
+				<section>
+					<h2>Other uses of source</h2>
+					<h3>Media queries!</h3>
+					<p>print images:</p>
+					<pre><code data-trim class="html">
+						<picture>
+							<source
+								type="image/png"
+								media="print"
+								srcset="black_and_white_logo.png 1x, black_and_white_logo_highres.png 2x"
+							>
+							<source
+								type="image/png"
+								media="screen"
+								srcset="color_logo.png 1x, color_logo_highres.png 2x"
+							>
+							<img
+								src="color_logo.png"
+								alt="..." />
+						</picture>
+					</code></pre>
 				</section>
 				<section>
 					<h2>Thank you!</h2>
